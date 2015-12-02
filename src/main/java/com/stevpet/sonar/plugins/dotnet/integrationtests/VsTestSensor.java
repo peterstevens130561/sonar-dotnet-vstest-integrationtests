@@ -34,6 +34,7 @@ import org.sonar.api.resources.Project;
 import com.stevpet.sonar.plugins.dotnet.mscover.MsCoverConfiguration;
 import com.stevpet.sonar.plugins.dotnet.mscover.coveragereader.CoverageReader;
 import com.stevpet.sonar.plugins.dotnet.mscover.coveragesaver.CoverageSaver;
+import com.stevpet.sonar.plugins.dotnet.mscover.coveragetoxmlconverter.BinaryCoverageToXmlConverter;
 import com.stevpet.sonar.plugins.dotnet.mscover.ittest.vstest.IntegrationTestsCoverageReader;
 import com.stevpet.sonar.plugins.dotnet.mscover.model.sonar.SonarCoverage;
 import com.stevpet.sonar.plugins.dotnet.mscover.workflow.sensor.IntegrationTestCache;
@@ -61,15 +62,19 @@ public class VsTestSensor implements Sensor {
 
 	private MsCoverConfiguration msCoverConfiguration;
 
+	private BinaryCoverageToXmlConverter coverageToXmlConverter;
+
 	public VsTestSensor(MsCoverConfiguration msCoverConfiguration, MicrosoftWindowsEnvironment microsoftWindowsEnvironment,
 			IntegrationTestCache cache, 
 			CoverageReader coverageReader,
-			CoverageSaver coverageSaver) {
+			CoverageSaver coverageSaver,
+			BinaryCoverageToXmlConverter coverageToXmlConverter) {
 		this.microsoftWindowsEnvironment = microsoftWindowsEnvironment;
 		this.cache=cache;
 		this.reader=coverageReader;
 		this.saver=coverageSaver;
 		this.msCoverConfiguration=msCoverConfiguration;
+		this.coverageToXmlConverter=coverageToXmlConverter;
 	}
 	private static final Logger LOG = LoggerFactory
 			.getLogger(VsTestSensor.class);
@@ -99,6 +104,7 @@ public class VsTestSensor implements Sensor {
             sonarCoverage=cache.getCoverage();
         } else {
             sonarCoverage = new SonarCoverage();
+            File xmlFile=coverageToXmlConverter.convertFiles(coverageFile);
             reader.read(sonarCoverage,coverageFile);
             cache.setHasRun(true);
             cache.setCoverage(sonarCoverage);

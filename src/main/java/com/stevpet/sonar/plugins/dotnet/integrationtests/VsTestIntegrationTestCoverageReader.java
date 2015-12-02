@@ -9,7 +9,7 @@ import com.stevpet.sonar.plugins.common.commandexecutor.WindowsCommandLineExecut
 import com.stevpet.sonar.plugins.dotnet.mscover.MsCoverConfiguration;
 import com.stevpet.sonar.plugins.dotnet.mscover.coverageparsers.vstestcoverageparser.FilteringCoverageParser;
 import com.stevpet.sonar.plugins.dotnet.mscover.coverageparsers.vstestcoverageparser.VsTestFilteringCoverageParser;
-import com.stevpet.sonar.plugins.dotnet.mscover.coveragetoxmlconverter.CoverageToXmlConverter;
+import com.stevpet.sonar.plugins.dotnet.mscover.coveragetoxmlconverter.BinaryCoverageToXmlConverter;
 import com.stevpet.sonar.plugins.dotnet.mscover.coveragetoxmlconverter.VsTestCoverageToXmlConverter;
 import com.stevpet.sonar.plugins.dotnet.mscover.coveragetoxmlconverter.WindowsCodeCoverageCommand;
 import com.stevpet.sonar.plugins.dotnet.mscover.ittest.vstest.IntegrationTestCoverageReaderBase;
@@ -23,13 +23,7 @@ public class VsTestIntegrationTestCoverageReader extends
 			MsCoverConfiguration msCoverProperties,
 			FileSystem fileSystem) {
 		super(microsoftWindowsEnvironment, 
-				msCoverProperties, 
 				new VsTestFilteringCoverageParser(),
-				new VsTestCoverageToXmlConverter(
-						fileSystem, 
-						new WindowsCodeCoverageCommand(),
-						new WindowsCommandLineExecutor()
-				), 
 				new DefaultProcessLock());
 	}
 

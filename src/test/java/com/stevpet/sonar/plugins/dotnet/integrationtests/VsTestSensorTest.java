@@ -15,6 +15,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.eq;
+
 import org.sonar.api.batch.Sensor;
 import org.sonar.api.batch.SensorContext;
 import org.sonar.api.resources.Project;
@@ -22,6 +23,7 @@ import org.sonar.api.resources.Project;
 import com.stevpet.sonar.plugins.dotnet.mscover.MsCoverConfiguration;
 import com.stevpet.sonar.plugins.dotnet.mscover.coveragereader.CoverageReader;
 import com.stevpet.sonar.plugins.dotnet.mscover.coveragesaver.CoverageSaver;
+import com.stevpet.sonar.plugins.dotnet.mscover.coveragetoxmlconverter.BinaryCoverageToXmlConverter;
 import com.stevpet.sonar.plugins.dotnet.mscover.model.sonar.SonarCoverage;
 import com.stevpet.sonar.plugins.dotnet.mscover.workflow.sensor.IntegrationTestCache;
 import com.stevpet.sonar.plugins.dotnet.utils.vstowrapper.MicrosoftWindowsEnvironment;
@@ -36,6 +38,7 @@ public class VsTestSensorTest {
 	@Mock private Project project;
 	private Sensor sensor;
 	@Mock private SensorContext context;
+	@Mock private BinaryCoverageToXmlConverter coverageToXmlCoverter;
 
 	
 	@Before
@@ -47,7 +50,7 @@ public class VsTestSensorTest {
 				microsoftWindowsEnvironemnt,
 				integrationTestCache,
 				coverageReader,
-				coverageSaver);
+				coverageSaver, coverageToXmlCoverter);
 		} catch (Exception e) {
 			fail("could not create sensor " + e.getMessage());
 		}
