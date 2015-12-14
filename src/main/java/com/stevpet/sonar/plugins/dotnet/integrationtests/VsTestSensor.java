@@ -35,7 +35,6 @@ import com.stevpet.sonar.plugins.dotnet.mscover.MsCoverConfiguration;
 import com.stevpet.sonar.plugins.dotnet.mscover.coveragereader.CoverageReader;
 import com.stevpet.sonar.plugins.dotnet.mscover.coveragesaver.CoverageSaver;
 import com.stevpet.sonar.plugins.dotnet.mscover.coveragetoxmlconverter.BinaryCoverageToXmlConverter;
-import com.stevpet.sonar.plugins.dotnet.mscover.ittest.vstest.IntegrationTestsCoverageReader;
 import com.stevpet.sonar.plugins.dotnet.mscover.model.sonar.SonarCoverage;
 import com.stevpet.sonar.plugins.dotnet.mscover.workflow.sensor.IntegrationTestCache;
 import com.stevpet.sonar.plugins.dotnet.mscover.workflow.sensor.LogChanger;
@@ -105,7 +104,7 @@ public class VsTestSensor implements Sensor {
         } else {
             sonarCoverage = new SonarCoverage();
             File xmlFile=coverageToXmlConverter.convertFiles(coverageFile);
-            reader.read(sonarCoverage,coverageFile);
+            reader.read(sonarCoverage,xmlFile);
             cache.setHasRun(true);
             cache.setCoverage(sonarCoverage);
         } 

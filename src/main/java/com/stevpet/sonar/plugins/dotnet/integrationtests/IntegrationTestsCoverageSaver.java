@@ -4,8 +4,6 @@ import org.sonar.api.BatchExtension;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.scan.filesystem.PathResolver;
 
-import com.stevpet.sonar.plugins.dotnet.mscover.coveragesaver.BranchFileCoverageSaver;
-import com.stevpet.sonar.plugins.dotnet.mscover.coveragesaver.LineFileCoverageSaver;
 import com.stevpet.sonar.plugins.dotnet.mscover.coveragesaver.defaultsaver.CoverageSaverBase;
 import com.stevpet.sonar.plugins.dotnet.mscover.coveragesaver.nullsaver.NullBranchFileCoverageSaver;
 import com.stevpet.sonar.plugins.dotnet.mscover.ittest.vstest.IntegrationTestLineFileCoverageSaver;
@@ -17,9 +15,9 @@ public class IntegrationTestsCoverageSaver extends CoverageSaverBase implements
 		BatchExtension {
 
 	public IntegrationTestsCoverageSaver(
-			BranchFileCoverageSaver branchCoverageSaver,
-			LineFileCoverageSaver lineCoverageSaver,
-			MicrosoftWindowsEnvironment microsoftWindowsEnvironment, PathResolver pathResolver, FileSystem fileSystem) {
+			MicrosoftWindowsEnvironment microsoftWindowsEnvironment, 
+			PathResolver pathResolver, 
+			FileSystem fileSystem) {
 		super(new NullBranchFileCoverageSaver(), 
 				new IntegrationTestLineFileCoverageSaver(
 						new DefaultResourceResolver(pathResolver,fileSystem)), 
